@@ -45,7 +45,7 @@ def procesar(texto, numero):
 
     if any(p in t for p in ["hola", "buenas", "buenos", "buen dia", "buenas tardes", "buenas noches"]):
         return (
-            "👋 ¡Hola! Bienvenido a *Ferretería Las Cabras* 🔧\n\n"
+            "👋 ¡Hola! Bienvenido a *Ferretería Oviedo el Manzano* 🔧\n\n"
             "¿En qué puedo ayudarte?\n\n"
             "⏰ Escribe *horario* → Horario de atención\n"
             "📦 Escribe *productos* → Ver catálogo completo\n"
