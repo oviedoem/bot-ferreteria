@@ -20,7 +20,20 @@ jobs:
           python-version: '3.11'
 
       - name: Descargar CSV desde OneDrive
-        run: python3 download_csv.py
+        run: |
+          DOWNLOAD_URL="https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED"
+          echo "Descargando desde: $DOWNLOAD_URL"
+          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1
+          echo "---"
+          ls -la PRODUCTOS.csv
+          echo "---"
+          if [ -f PRODUCTOS.csv ]; then
+            echo "Archivo descargado exitosamente"
+            cabeza -3 PRODUCTOS.csv
+          else
+            echo "ERROR: No se pudo descargar el archivo"
+            Salida 1
+          fi
 
       - name: Verificar descarga
         run: |
@@ -28,15 +41,20 @@ jobs:
           if [ ! -s PRODUCTOS.csv ]; then exit 1; fi
 
       - name: Instalar dependencias
-        run: pip install requests
+        run: pip install pandas
 
       - name: Convertir CSV a JSON
-        run: python3 convertir_csv.py PRODUCTOS.csv productos.json
+        run: python convertir_csv.py PRODUCTOS.csv productos.json
 
       - name: Verificar salida JSON
-        run: python3 -c "import json; data=json.load(open('productos.json')); print(f'{len(data.get(\"productos\", []))} productos cargados')"
+        run: |
+          echo "Tamaño del JSON generado:"
+          wc -c productos.json
+          cabeza -30 productos.json
 
       - name: Commit cambios
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
