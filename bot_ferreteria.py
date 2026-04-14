@@ -172,7 +172,7 @@ def webhook():
         if request.method == "GET" and not request.get_json(silent=True):
                 # Webhook verification - responde OK para que Whapi confirme
                     return "OK", 200
-    data = request.json or {}
+        data = request.json or {}
     print(f"Webhook recibido: {list(data.keys())}")
     # Manejar eventos de estados (delivery, read) - solo loguear
     if "statuses" in data or "estados" in data:
