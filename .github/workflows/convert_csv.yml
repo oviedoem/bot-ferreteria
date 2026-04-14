@@ -19,10 +19,14 @@ jobs:
 
       - name: Descargar CSV desde OneDrive
         run: |
-          # URL del archivo compartido en OneDrive
-          ONE_DRIVE_URL="https://onedrive.live.com/personal/0997a298f38f1554/_layouts/15/Doc.aspx?sourcedoc=%7Bc18428d3-8b28-4f54-b37a-d4b99c892fed%7D"
-          # Intentar descargar como CSV
-          curl -L "https://onedrive.live.com/download?cid=d2977c55-2364-4f15-898e-bbc6e9d45281&resid=C18428D38B284F54B37AD4B99C892FED!115&authkey=!AJ6qjA" -o PRODUCTOS.csv || echo "Descarga fallida, usando archivo existente"
+          # Usar URL de embed convertida a download
+          # Share URL: https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKIuTU7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA?e=he8jxe
+          EMBED_URL="https://onedrive.live.com/embed?resid=C18428D38B284F54B37AD4B99C892FED%21115&authkey=%21AJ6qjA"
+          DOWNLOAD_URL=$(echo "$EMBED_URL" | sed 's/embed/download/')
+          echo "Intentando descargar desde: $DOWNLOAD_URL"
+          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1 || echo "Error en descarga"
+          ls -la PRODUCTOS.csv
+          head -5 PRODUCTOS.csv
 
       - name: Instalar dependencias
         run: pip install pandas
@@ -34,9 +38,11 @@ jobs:
         run: |
           echo "Tamaño del JSON generado:"
           wc -c productos.json
-          head -20 productos.json
+          head -30 productos.json
 
       - name: Commit cambios
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -45,5 +51,5 @@ jobs:
             echo "No hay cambios"
           else
             git commit -m "Actualizar catalogo de productos desde CSV" || echo "No hay cambios"
-            git push
+            git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" main
           fi
