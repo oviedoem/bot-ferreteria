@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 3 * * *'
 
+permissions:
+  contents: write
 jobs:
   convert:
     runs-on: ubuntu-latest
