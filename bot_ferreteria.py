@@ -57,12 +57,11 @@ def enviar(numero, texto):
         return
     headers = {"Authorization": f"Bearer {WHAPI_TOKEN}"}
     payload = {
-        "to": f"{chat_id}@s.whatsapp.net",
-        "text": texto
+        "a": f"{chat_id}@s.whatsapp.net",
+        "cuerpo": texto
     }
     try:
-        resp = requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)
-        print(f"Enviado a {chat_id}@s.whatsapp.net: {resp.status_code}")
+        resp = requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)        print(f"Enviado a {chat_id}@s.whatsapp.net: {resp.status_code}")
         if resp.status_code != 200:
             print(f"Respuesta API: {resp.text[:200]}")
     except Exception as e:
