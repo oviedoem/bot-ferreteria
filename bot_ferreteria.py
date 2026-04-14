@@ -1,153 +1,167 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Bot Ferretería - WhatsApp Business Bot
+Conecta con productos.json para consultas de productos y precios
+"""
+
+import os
+import json
+import time
+import re
 from flask import Flask, request, jsonify
-import requests, json, os, re
+import requests
 
 app = Flask(__name__)
 
-# ============================================================
-# EDITA SOLO ESTA LÍNEA CON TU TOKEN DE WHAPI.CLOUD
-# ============================================================
-WHAPI_TOKEN = "paZBDoXBHetA48viZxKc2KzAWnxnKpbH"
-# ============================================================
-
+# =========================================================
+# EDITE SOLO ESTAS LINEAS CON TU TOKEN Y URL
+# =========================================================
+WHAPI_TOKEN = "paZBDoXBHetA48viZxKc2KzAMnxnKpbH"
 WHAPI_URL = "https://gate.whapi.cloud/messages/text"
+# =========================================================
 
 # Variables globales para cache de datos
 datos_cache = None
 ultima_carga = 0
 
 def cargar_datos():
+    """Carga datos de productos.json con manejo de errores"""
     global datos_cache, ultima_carga
     import time
     ahora = time.time()
     if datos_cache and (ahora - ultima_carga) < 30:
         return datos_cache
-    with open("productos.json", "r", encoding="utf-8") as f:
-        datos_cache = json.load(f)
-    ultima_carga = ahora
-    return datos_cache
+    try:
+        with open("productos.json", "r", encoding="utf-8") as f:
+            datos_cache = json.load(f)
+        ultima_carga = ahora
+        print(f"Datos cargados: {len(datos_cache.get('productos', []))} productos")
+        return datos_cache
+    except Exception as e:
+        print(f"Error cargando datos: {e}")
+        return {"productos": [], "horario": "Consultar por WhatsApp", "ubicacion": "Las Cabras"}
 
-def buscar_productos(datos, busqueda):
-    """Busca productos por codigo o descripcion"""
-    resultados = []
-    busqueda = busqueda.strip().lower()
-    for p in datos["productos"]:
-        codigo = p.get("codigo", "").lower()
-        nombre = p.get("nombre", "").lower()
-        descripcion = p.get("descripcion", nombre).lower()
-        # Busca coincidencia en codigo o descripcion
-        if busqueda in codigo or busqueda in descripcion:
-            resultados.append(p)
-            if len(resultados) >= 20:  # Limita a 20 resultados
-                break
-    return resultados
-
-def construir_catalogo(datos):
-    """Construye catalogo de productos (max 30 para no saturar WhatsApp)"""
-    lineas = ["📦 *Catálogo Ferretería:*\n"]
-    productos = datos["productos"][:30]  # Muestra solo los primeros 30
-    for p in productos:
-        precio = p.get("precio", 0)
-        stock = p.get("stock", "consultar")
-        if stock == "disponible":
-            estado = "✅"
-        elif stock == "agotado":
-            estado = "❌ Agotado"
-        else:
-            estado = "⚠️ Consultar"
-        nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
-        lineas.append(f"• {nombre}: ${precio:,} CLP {estado}")
-    lineas.append(f"\n_Se muestran 30 de {len(datos['productos']):,} productos. Escribe *precio [producto]* o *codigo [nro]* para buscar uno específico._")
-    return "\n".join(lineas)
-
-def enviar(numero, mensaje):
-    payload = {"to": numero, "body": mensaje}
-    headers = {
-        "Authorization": f"Bearer {WHAPI_TOKEN}",
-        "Content-Type": "application/json"
+def enviar(numero, texto):
+    """Envia mensaje de texto via WHAPI"""
+    if not numero or not texto:
+        return
+    headers = {"Authorization": f"Bearer {WHAPI_TOKEN}"}
+    payload = {
+        "chat_id": numero,
+        "text": texto
     }
     try:
-        requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)
+        resp = requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)
+        print(f"Enviado a {numero}: {resp.status_code}")
     except Exception as e:
-        print("Error enviando mensaje:", e)
+        print(f"Error enviando: {e}")
+
+def buscar_productos(datos, busqueda):
+    """Busca productos por nombre, descripción o código"""
+    productos = datos.get("productos", [])
+    busqueda_lower = busqueda.lower()
+    encontrados = []
+    for p in productos:
+        nombre = p.get("nombre", p.get("descripcion", "")).lower()
+        codigo = p.get("codigo", "").lower()
+        if busqueda_lower in nombre or busqueda_lower in codigo:
+            encontrados.append(p)
+    return encontrados
 
 def procesar(texto, numero):
+    """Procesa el mensaje y devuelve la respuesta"""
     datos = cargar_datos()
-    t = texto.lower().strip()
-    
-    if any(p in t for p in ["hola", "buenas", "buenos", "buen dia", "buenas tardes", "buenas noches"]):
-        return (
-            "👋 ¡Hola! Bienvenido a *Ferretería Oviedo el Manzano* 🔧\n\n"
-            "¿En qué puedo ayudarte?\n\n"
-            "⏰ Escribe *horario* → Horario de atención\n"
-            "📦 Escribe *productos* → Ver catálogo completo\n"
-            "💰 Escribe *precio cemento* → Buscar precio de un producto\n"
-            "🔢 Escribe *codigo 12345* → Buscar por código de producto\n"
-            "📍 Escribe *ubicacion* → Cómo llegar\n\n"
-            "También puedes escribirnos directo y te respondemos pronto 😊"
-        )
-    
-    elif "horario" in t:
-        h = datos.get("horario", "Consultar por WhatsApp")
-        return f"⏰ *Horario de atención:*\n\n{h}"
-    
-    elif any(p in t for p in ["producto", "catalogo", "catálogo", "lista", "que tienen", "qué tienen", "que venden"]):
-        return construir_catalogo(datos)
-    
-    elif "ubicacion" in t or "ubicación" in t or "donde" in t or "dónde" in t or "direccion" in t or "dirección" in t:
-        d = datos.get("ubicacion", "Las Cabras, Región de O'Higgins")
-        return f"📍 *Ubicación:*\n\n{d}"
-    
-    elif any(p in t for p in ["codigo", "código", "cod", "cod:", "nro", "numero"]):
-        # Búsqueda por código
-        busqueda = t
-        for palabra in ["codigo", "código", "cod", "cod:", "nro", "numero", "precio"]:
-            busqueda = busqueda.replace(palabra, "").strip()
-        if busqueda:
-            encontrados = buscar_productos(datos, busqueda)
-            if encontrados:
-                resp = f"🔢 *Producto encontrado por código:*\n"
-                for p in encontrados:
-                    nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
-                    precio = p.get("precio", 0)
-                    codigo = p.get("codigo", "N/A")
-                    resp += f"\n• Cód. {codigo} | {nombre} → ${precio:,} CLP"
-                return resp
+    texto = texto.strip()
+    texto_lower = texto.lower()
+
+    if texto_lower.startswith("precio "):
+        busqueda = texto[7:].strip()
+        if len(busqueda) < 2:
+            return "Escribe 'precio' seguido del nombre. Ej: precio cemento"
+        encontrados = buscar_productos(datos, busqueda)
+        if encontrados:
+            resp = f"{len(encontrados)} resultado(s) para '{busqueda}':\n"
+            for p in encontrados:
+                nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
+                precio = p.get("precio", 0)
+                codigo = p.get("codigo", "")
+                if codigo:
+                    resp += f"\n- Cod. {codigo} | {nombre} -> ${precio:,} CLP (IVA inc.)"
+                else:
+                    resp += f"\n- {nombre} -> ${precio:,} CLP (IVA inc.)"
+            return resp
+        else:
+            return f"No encontre '{busqueda}' en el catalogo.\nEscribe 'productos' para ver la lista completa o contactanos directamente."
+
+    elif texto_lower.startswith("codigo "):
+        codigo_busqueda = texto[7:].strip().lower()
+        if len(codigo_busqueda) < 2:
+            return "Escribe 'codigo' seguido del código. Ej: codigo 1234"
+        encontrados = [p for p in datos.get("productos", []) if codigo_busqueda in p.get("codigo", "").lower()]
+        if encontrados:
+            resp = f"{len(encontrados)} resultado(s) para código '{codigo_busqueda}':\n"
+            for p in encontrados:
+                nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
+                precio = p.get("precio", 0)
+                codigo = p.get("codigo", "")
+                resp += f"\n- Cod. {codigo} | {nombre} -> ${precio:,} CLP (IVA inc.)"
+            return resp
+        else:
+            return f"No encontre el código '{codigo_busqueda}' en el catalogo."
+
+    elif texto_lower in ("productos", "catalogo", "catálogo", "lista"):
+        productos = datos.get("productos", [])[:50]
+        resp = f"Catalogo ({len(datos.get('productos', []))} productos):\n"
+        for p in productos:
+            nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
+            precio = p.get("precio", 0)
+            codigo = p.get("codigo", "")
+            if codigo:
+                resp += f"\n- {codigo}: {nombre} -> ${precio:,}"
             else:
-                return f"🔍 No encontré ningún producto con código *{busqueda}*. Verifica el número e intenta nuevamente."
-        return "Por favor escribe *codigo* seguido del número de código del producto. Ejemplo: codigo 12345"
-    
-    elif any(p in t for p in ["precio", "cuanto", "cuánto", "vale", "cuesta", "valor", "precio de"]):
-        busqueda = t
-        for palabra in ["precio", "cuanto vale", "cuánto vale", "cuanto cuesta", "cuánto cuesta", "valor", "precio de"]:
-            busqueda = busqueda.replace(palabra, "").strip()
-        if busqueda:
-            encontrados = buscar_productos(datos, busqueda)
-            if encontrados:
-                resp = f"💰 *{len(encontrados)} resultado(s) para '{busqueda}':*\n"
-                for p in encontrados:
-                    nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
-                    precio = p.get("precio", 0)
-                    codigo = p.get("codigo", "")
-                    if codigo:
-                        resp += f"\n• Cód. {codigo} | {nombre} → ${precio:,} CLP (IVA inc.)"
-                    else:
-                        resp += f"\n• {nombre} → ${precio:,} CLP (IVA inc.)"
-                return resp
-            else:
-                return (f"🔍 No encontré *{busqueda}* en el catálogo.\n"
-                        "Escribe *productos* para ver la lista completa o contáctanos directamente.")
-        return "Por favor escribe *precio* seguido del nombre del producto. Ejemplo: precio cemento"
-    
+                resp += f"\n- {nombre} -> ${precio:,}"
+        if len(datos.get("productos", [])) > 50:
+            resp += "\n\nEscribe 'precio [nombre]' para buscar un producto especifico."
+        return resp
+
+    elif texto_lower in ("horario", "atencion", "atención"):
+        horario = datos.get("horario", "Lunes a Viernes 09:00 - 18:00")
+        return f"Horario de atencion:\n{horario}\n\n¿En que mas puedo ayudarte?"
+
+    elif texto_lower in ("ubicacion", "direccion", "donde", "ubicación"):
+        ubicacion = datos.get("ubicacion", "Las Cabras, Chile")
+        return f"Te esperamos en:\n{ubicacion}\n\n¿Necesitas algo mas?"
+
+    elif texto_lower.startswith("buscar "):
+        busqueda = texto[7:].strip()
+        if len(busqueda) < 2:
+            return "Escribe 'buscar' seguido del nombre del producto."
+        encontrados = buscar_productos(datos, busqueda)
+        if encontrados:
+            resp = f"{len(encontrados)} resultado(s):\n"
+            for p in encontrados:
+                nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
+                precio = p.get("precio", 0)
+                codigo = p.get("codigo", "")
+                if codigo:
+                    resp += f"\n- Cod. {codigo} | {nombre} -> ${precio:,} CLP"
+                else:
+                    resp += f"\n- {nombre} -> ${precio:,} CLP"
+            return resp
+        else:
+            return f"No encontre '{busqueda}' en nuestro catalogo."
+
     else:
         return (
-            "Gracias por escribirnos 🔧\n\n"
+            "Gracias por escribirnos\n\n"
             "Puedo ayudarte con:\n"
-            "• *horario* → Horario de atención\n"
-            "• *productos* → Catálogo de productos\n"
-            "• *precio [nombre]* → Buscar precio\n"
-            "• *codigo [nro]* → Buscar por código\n"
-            "• *ubicacion* → Dónde encontrarnos\n\n"
-            "Para consultas específicas, un vendedor te responderá pronto."
+            "- 'horario' -> Horario de atencion\n"
+            "- 'productos' -> Catalogo de productos\n"
+            "- 'precio [nombre]' -> Buscar precio\n"
+            "- 'codigo [nro]' -> Buscar por codigo\n"
+            "- 'ubicacion' -> Donde encontrarnos\n\n"
+            "Para consultas especificas, un vendedor te respondera pronto."
         )
 
 @app.route("/webhook", methods=["POST"])
@@ -168,7 +182,9 @@ def webhook():
 
 @app.route("/", methods=["GET"])
 def home():
-    return "✅ Bot Ferretería activo - 12.000+ productos"
+    datos = cargar_datos()
+    num_prod = len(datos.get("productos", []))
+    return f"Bot Ferreteria activo - {num_prod} productos cargados"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
