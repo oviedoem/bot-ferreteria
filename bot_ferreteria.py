@@ -17,7 +17,7 @@ app = Flask(__name__)
 # =========================================================
 # EDITE SOLO ESTAS LINEAS CON TU TOKEN Y URL
 # =========================================================
-WHAPI_TOKEN = "paZBDoXBHetA48viZxKc2KzAMnxnKpbH"
+WHAPI_TOKEN = os.environ.get("WHAPI_TOKEN", "paZBDoXBHetA48viZxKc2KzAMnxnKpbH")  # Configura en Railway/Render
 WHAPI_URL = "https://gate.whapi.cloud/messages/text"
 # =========================================================
 
