@@ -1,6 +1,6 @@
 {
-  "horario": "Lunes a Viernes: 8:30 - 13:00 y 15:00 - 19:30\nSábado: 9:00 - 14:00\nDomingo: Cerrado\nFeriados: Consultar por WhatsApp",
-  "ubicacion": "Av. Principal s/n, Las Cabras, Región de O'Higgins\n\nREFERENCIAS:\n- Frente al Estadio Municipal\n- Próximo a la Plaza de Armas\n- Fácil acceso desde la Ruta 5\n- Frente a la Iglesia de Las Cabras\n\nESTACIONAMIENTO disponible",
+  "horario": "Lunes a Viernes: 8:30 - 13:30 y 14:30 - 18:00\nSábado: 9:00 - 13:30\nDomingo: Cerrado\nFeriados: Consultar por WhatsApp",
+  "ubicacion": "carretera H66,km62,el manzano, Las Cabras, Región de O'Higgins\n\nREFERENCIAS:\n- a 100 metros de la Copec\nESTACIONAMIENTO disponible",
   "productos": [
     {"nombre": "Cemento 25kg", "precio": 4500, "stock": "disponible"},
     {"nombre": "Arena fina saco 40kg", "precio": 2800, "stock": "disponible"},
