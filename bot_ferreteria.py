@@ -57,8 +57,8 @@ def enviar(numero, texto):
         return
     headers = {"Authorization": f"Bearer {WHAPI_TOKEN}"}
     payload = {
-        "a": f"{chat_id}@s.whatsapp.net",
-        "cuerpo": texto
+        "to": f"{chat_id}@s.whatsapp.net",
+        "body": texto
     }
     try:
         resp = requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)        print(f"Enviado a {chat_id}@s.whatsapp.net: {resp.status_code}")
