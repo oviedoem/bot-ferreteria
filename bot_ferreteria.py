@@ -175,15 +175,15 @@ def webhook():
     data = request.json or {}
     print(f"Webhook recibido: {list(data.keys())}")
     # Manejar eventos de estados (delivery, read) - solo loguear
-    if "statuses" in data:
-        print(f"Evento de estado recibido: {data.get('statuses', [])}")
+    if "statuses" in data or "estados" in data:
+        print(f"Evento de estado recibido: {data.get('statuses') or data.get('estados', [])}")
         return jsonify({"status": "ok"})
     # Manejar eventos de mensajes entrantes
-    if "messages" not in data:
-        print(f"Webhook sin clave 'messages': {data}")
+    if "messages" not in data and "mensajes" not in data:
+        print(f"Webhook sin clave 'messages/mensajes': {data}")
         return jsonify({"status": "ok"})
     try:
-        msgs = data["messages"]
+        msgs = data.get("messages") or data.get("mensajes")
         if not msgs:
             return jsonify({"status": "ok"})
         for msg in msgs:
