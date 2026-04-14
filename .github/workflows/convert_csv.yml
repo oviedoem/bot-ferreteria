@@ -22,23 +22,22 @@ jobs:
 
       - name: Descargar CSV desde OneDrive
         run: |
-          python3 -c "
+          python3 << 'PYEOF'
 import base64
 import urllib.request
-import os
 
-share_url = 'https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA?e=he8jxe'
+share_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA?e=he8jxe"
 encoded = base64.urlsafe_b64encode(share_url.encode()).rstrip(b'=').decode()
-api_url = f'https://api.onedrive.com/v1.0/shares/u!{encoded}/root/content'
-print(f'Descargando desde: {api_url}')
-headers = {'Accept': '*/*'}
+api_url = f"https://api.onedrive.com/v1.0/shares/u!{encoded}/root/content"
+print(f"Descargando desde: {api_url}")
+headers = {"Accept": "*/*"}
 req = urllib.request.Request(api_url, headers=headers)
 with urllib.request.urlopen(req, timeout=30) as r:
     data = r.read()
-with open('PRODUCTOS.csv', 'wb') as f:
+with open("PRODUCTOS.csv", "wb") as f:
     f.write(data)
-print(f'Descargado: {len(data)} bytes')
-"
+print(f"Descargado: {len(data)} bytes")
+PYEOF
           wc -c PRODUCTOS.csv
           if [ ! -s PRODUCTOS.csv ]; then exit 1; fi
 
