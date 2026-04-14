@@ -1,16 +1,22 @@
 {
-  "horario": "Lunes a Viernes: 8:30 - 13:00 y 15:00 - 19:30\nSábado: 9:00 - 14:00\nDomingo: Cerrado",
-  "ubicacion": "Av. Principal s/n, Las Cabras, Región de O'Higgins.\nFácil acceso desde la ruta principal.",
+  "horario": "Lunes a Viernes: 8:30 - 13:00 y 15:00 - 19:30\nSábado: 9:00 - 14:00\nDomingo: Cerrado\nFeriados: Consultar por WhatsApp",
+  "ubicacion": "Av. Principal s/n, Las Cabras, Región de O'Higgins\n\nREFERENCIAS:\n- Frente al Estadio Municipal\n- Próximo a la Plaza de Armas\n- Fácil acceso desde la Ruta 5\n- Frente a la Iglesia de Las Cabras\n\nESTACIONAMIENTO disponible",
   "productos": [
-    {"nombre": "Cemento 25kg",          "precio": 4500,  "stock": "disponible"},
-    {"nombre": "Arena fina saco 40kg",  "precio": 2800,  "stock": "disponible"},
-    {"nombre": "Pintura látex 1L",      "precio": 8900,  "stock": "disponible"},
-    {"nombre": "Pintura látex 4L",      "precio": 29900, "stock": "disponible"},
-    {"nombre": "Tornillos 1pulgada 100u","precio": 1200,  "stock": "disponible"},
-    {"nombre": "Tornillos 2pulgadas 100u","precio":1800,  "stock": "disponible"},
-    {"nombre": "Manguera 1/2 por metro","precio": 950,   "stock": "disponible"},
-    {"nombre": "Llave ajustable 12",    "precio": 5800,  "stock": "disponible"},
-    {"nombre": "Clavos 2pulgadas 1kg",  "precio": 1500,  "stock": "disponible"},
-    {"nombre": "Flex 115mm",            "precio": 3200,  "stock": "consultar"}
-  ]
+    {"nombre": "Cemento 25kg", "precio": 4500, "stock": "disponible"},
+    {"nombre": "Arena fina saco 40kg", "precio": 2800, "stock": "disponible"},
+    {"nombre": "Pintura látex 1L", "precio": 8900, "stock": "disponible"},
+    {"nombre": "Pintura látex 4L", "precio": 29900, "stock": "disponible"},
+    {"nombre": "Tornillos 1pulgada 100u", "precio": 1200, "stock": "disponible"},
+    {"nombre": "Tornillos 2pulgadas 100u", "precio": 1800, "stock": "disponible"},
+    {"nombre": "Manguera 1/2 por metro", "precio": 950, "stock": "disponible"},
+    {"nombre": "Llave ajustable 12\"", "precio": 5800, "stock": "disponible"},
+    {"nombre": "Clavos 2pulgadas 1kg", "precio": 1500, "stock": "disponible"},
+    {"nombre": "Flex 115mm", "precio": 3200, "stock": "consultar"},
+    {"nombre": "Taladro percutor", "precio": 35000, "stock": "disponible"},
+    {"nombre": "Brocas metal 6mm", "precio": 1800, "stock": "disponible"},
+    {"nombre": "Cinta aisladora", "precio": 950, "stock": "disponible"},
+    {"nombre": "Bombilla 9W", "precio": 2500, "stock": "disponible"},
+    {"nombre": "Tubo PVC 1/2\" por metro", "precio": 1200, "stock": "disponible"}
+  ],
+  "_nota_edicion": "Para editar: cambia el texto dentro de las comillas y presiona 'Confirma los cambios' al final"
 }
