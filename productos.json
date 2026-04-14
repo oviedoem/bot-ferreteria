@@ -1,5 +1,774 @@
 {
   "horario": "Lunes a Viernes: 8:30 - 13:30 y 14:30 - 18:00\nSabado: 9:00 - 13:30\nDomingo: Cerrado",
   "ubicacion": "Carretera H66, km62, El Manzano, Las Cabras, Region de O'Higgins",
-  "productos": []
+  "productos": [
+    {
+      "codigo": "19682;CONTROL REMOTO UNIVERSAL PARA MOT VELOTI 1500",
+      "descripcion": "800",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "20991;VOLCANITA RH 1200X2400X12",
+      "descripcion": "5 MM (27",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "23269;SET 5 BROCAS CONCRETO 4",
+      "descripcion": "5,6,8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "23270;SET 5 BROCAS MADERA 4",
+      "descripcion": "5,6,8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "23894;PACK ESPONJAS ABRASIVAS 3UN CONTORNO(NARANJO",
+      "descripcion": "AMARILLO",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "23992;\"DISCO DESBASTE 4 1/2\"\" X 7/8\"\"",
+      "descripcion": "6MM ESPESOR",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "23994;\"DISCO DESBASTE 7\"\" X 7/8\"\"",
+      "descripcion": "6MM ESPESOR",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24000;SET PUNTAS PH1",
+      "descripcion": "25MM",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24002;SET PUNTAS PH2",
+      "descripcion": "25MM",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24010;SET IMPACT CONTROL 5 PZAS DADOS 8",
+      "descripcion": "10",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24012;SET 13 UDS BROCAS DE METAL HSS-R 1",
+      "descripcion": "5 HASTA 6",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24062;SET 3 PZAS CYL-1 BROCAS PARA HORMIGON 5",
+      "descripcion": "6",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24114;LIJADORA ROTO ORBITAL INAL BOSCH GEX 185-LI",
+      "descripcion": "BRUSHLESS",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "24121;LIJADORA ROTO ORBITAL INAL BOSCH GEX 12V-125",
+      "descripcion": "BRUSHLESS",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "26059;PLANCHA DIAMANTADA NEGRA 3000 X 1000 X 2",
+      "descripcion": "5 MM 63",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "26297;(CD) MALLA ACMA CERCO 1G 3",
+      "descripcion": "7 mm 1850 X 3000 (12",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300040;PLA. FIBROC SIMPLISIMA MARM RAPOLANO BEIGE C/EGI 6MMX1",
+      "descripcion": "20X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300041;PLA. FIBROC SIMPLISIMA MARM TRAVERTINO BEIGE ROMA 6 MM 1",
+      "descripcion": "20 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300042;PLA. FIBROC SIMPLISIMA MARM BOTTICINO GRAFITO 6MM X 1",
+      "descripcion": "20 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300053;PLA. FIBROCEM. SIMPLISIMA PIEDRA AZTECA AMARILLA 6MM X1",
+      "descripcion": "20X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300065;PLA. FIBROCEMENTO SIMPLISIMA PIEDRA CANTERA CENIZA 6MM X 1",
+      "descripcion": "20X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300074;PLA. FIBROCEMENTO SIMPLISIMA MADERA RUSTICA NATURAL 6MMX1",
+      "descripcion": "20 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300096;PLA. FIBROCEMENTO SIMPLISIMA TEXT. PIEDRA LAJA GRIS 6MMX 1",
+      "descripcion": "20 X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "300098;PLA. FIBROCEMENTO SIMPLISIMA PIEDRA NATIVA 6MMX1",
+      "descripcion": "20X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "58013;\"KIT MANT. PISCINA 80\"\"/2.03M+ RED",
+      "descripcion": "C.SKIMMER",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "67630;COLCHON INFL. QUEEN TRITECH-A 203X152X46CM+BOLSA",
+      "descripcion": "PARCHE",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "67692;COLCHON INFL. KING TRITECH 203X193X56CM +BOLSA",
+      "descripcion": "PARCHE",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "71256;\"ESMERIL ANGULAR 4.1/2\"\" 820W C/10 DISCOS",
+      "descripcion": "MALETA",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "8905;KIT MANGA TERMOCONTRAIBLE NEGRO (1",
+      "descripcion": "5-2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "8906;KIT MANGA TERMOCONTRAIBLE COLORES(1",
+      "descripcion": "5-2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ARA015;TERC. ESTRUC PRIMERA 15 MM 1",
+      "descripcion": "20 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ARA018;TERC. ESTRUC. PRIMERA 18 MM 1",
+      "descripcion": "20 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BILD007;PANEL PVC TIPO MARMOL BCO CLASICO 3MM X 1",
+      "descripcion": "22X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BILD011;PANEL PVC TIPO MARMOL NEGRO CLASICO V/BLANCAS  3MM X1",
+      "descripcion": "22X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BILD017;PANEL PVC TIPO MARMOL BLANCO CON TONOS AMBAR 3MM X1",
+      "descripcion": "22X2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BLAK0134;HIDROLAVADORA 1400W 1512 PSI C/PISTOLA",
+      "descripcion": "MANGUERA",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BROC0002;SET 3 BROCAS CONCRETO 5",
+      "descripcion": "6",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BROC0051;\"FRESA RIBETES Y ENCAJES 6",
+      "descripcion": "35X25",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "BROC0055;FRESA PARA BISELAR 6",
+      "descripcion": "35X34",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "DIB059;PISO VINIL SPC 5MM+0",
+      "descripcion": "3MM C.USO 220X1220 NATURAL/GOLDEN(2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "DIB061;PISO VINIL SPC 5MM+0",
+      "descripcion": "3MM C.USO 220X1220 GRIS CLARO SILV(2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "DIB063;PISO VINIL SPC 5MM+0",
+      "descripcion": "3MM C.USO 220X1220 GRIS MED SLATE(2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "DIB065;PISO VINIL SPC 5MM+0",
+      "descripcion": "3MM C.USO 220X1220 CAFÉ OSC COCOA(2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FELT004;AIS. TERM MAXIT FELTREX 250 1",
+      "descripcion": "2X12MT (14,4 MT2)3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FELT006;AISLANTE TERMICO FISITERM ST FELTREX 2",
+      "descripcion": "4X15 MT(36 MT2/ 10",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FIBR001;PLANCHA FIBRA DE VIDRIO 5V LUZ DIFUSORA 0",
+      "descripcion": "7 MM X 0,90 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FIBR002;PLANCHA FIBRA DE VIDRIO 5V LUZ DIFUSORA 0",
+      "descripcion": "7 MM X 0,90 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FIBR008;PLANCHA FIBRA DE VIDRIO 5V BRONCE 0",
+      "descripcion": "7 MM X 0,90 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FIBR012;PLANCHA FIBRA DE VIDRIO ONDULADA BRONCE 0",
+      "descripcion": "7 MM X 0,85 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "FIBR014;PLANCHA FIBRA DE VIDRIO ONDULADA BRONCE 0",
+      "descripcion": "7 MM X 0,85 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HELA0265;RASPADOR ACERO PINT",
+      "descripcion": "BARNIZ",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HELA0280;MULTIHERRAMIENTA 3x1 HELA SACAR/APLICAR SILIC",
+      "descripcion": "FRAGUE",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HERR0038;\"DISCO CORTE",
+      "descripcion": "RECTO 4 1/2\"\" X 7/8\"\", 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HERR0039;\"DISCO CORTE",
+      "descripcion": "RECTO 7\"\" X 7/8\"\"",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HOJA0001;HOJA CALAR T118AF CORTE EN ALUMINIO",
+      "descripcion": "METAL",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "HOJA0007;HOJA CALAR T111C CORTE METAL",
+      "descripcion": "MADERA, PLÁSTICOS",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "LAVA0188;DESPENSA 1 PTA BCO LISO 2.0 ALTOX0",
+      "descripcion": "35 ANCHOX0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "LAVA0192;MUEBLE KIT HORNO/MICRO BCO LISO 2.0 ALTOX0",
+      "descripcion": "65 ANCHOX0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MALC0020;(CD) MALLA ACMA 3G 3",
+      "descripcion": "7 mm 1.85 X5.0 MTS (20",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MALC0145;METAL DESPLEGADO 3/4 x 0",
+      "descripcion": "60 x 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MARI0819;PORTALÁMPARAS",
+      "descripcion": "DEXSON, PARA TECHO, E27, REDONDO",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MARI0820;PORTALÁMPARA DE TECHO E27",
+      "descripcion": "DEXSON",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MEGA0002;SOLDADORA MEGA FORCE 130 AMP LINCOLN K69067-1 TIG/MMA 220V (6010",
+      "descripcion": "6011,7018",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MEGA0004;SOLDADORA MEGA FORCE 175 AMP LINCOLN K69068-1 TIG/MMA 220V (6010",
+      "descripcion": "6011,7018",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MEGA0006;SOLDADORA MEGA FORCE 225 AMP LINCOLN K69067-3 TIG/MMA 220 V. (6010",
+      "descripcion": "6011,7018",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MEGA0008;SOLDAD MEGA FORCE 330-HD AMP LINCOLN K69006-13 TIG/MMA 220V (6010",
+      "descripcion": "6011,7018",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "MELA002;MELAMINA BLANCA VESTO 15 MM 1",
+      "descripcion": "83 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ODIS0505;CAJA GUARDA LLAVES L MOD-100S C/GANCHO COMB 12X8",
+      "descripcion": "9X4",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PASS0151;PINTURA PARA TECHO VERDE 1 GL (ZINC",
+      "descripcion": "HORMIGON",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PASS0153;PINTURA PARA TECHO ROJO 1 GL (ZINC",
+      "descripcion": "HORMIGON",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PASS0155;PINTURA PARA TECHO NEGRO 1 GL (ZINC",
+      "descripcion": "HORMIGON",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PISO0628;PISO FLOT ROBLE CARBON  (MATT-BLACK-VIFLOORING) 8",
+      "descripcion": "3 MM (CAJA 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PISO0629;PISO FLOT ROBLE MADERA (OAK-ROBLE-VIFLOORING) 8",
+      "descripcion": "3 MM (CAJA 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PISO0630;PISO FLOT GRIS RUSTICO  (IP16-80078-VIFLOORING) 8",
+      "descripcion": "3 MM (CAJA 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PISO0631;PISO FLOT MADERA CANELA (6670-VIFLOORING) 8",
+      "descripcion": "3 MM (CAJA 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PISO0632;PISO FLOT GRIS ARTICO (18049-5-VIFLOORING) 8",
+      "descripcion": "3 MM (CAJA 1",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PL0500;PLACA COMPACTADORA C90 MOTOR HONDA 5",
+      "descripcion": "5",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PL0700;P.COMPACTADORA C80 MOTOR HONDA 5",
+      "descripcion": "5",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PLAC001;PLACA COMPACTADORA BENC MOTOR 6",
+      "descripcion": "5HP 70X50CM IMPACTO 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0021;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "5 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0022;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "5 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0023;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "5 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0024;PLANCHA POLICARBONATO ONDULADA BRONCE 0/ZINC 0",
+      "descripcion": "5 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0060;PLANCHA POLICARBONATO ONDULADA TRANSP O/ZINC 0",
+      "descripcion": "7 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0062;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "7 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0064;PLANCHA POLICARBONATO ONDULADA OPAL O/ZINC 0",
+      "descripcion": "7 MM 0",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0066;PLANCHA POLICARBONATO ONDULADA TRASP O/ZINC 0",
+      "descripcion": "7 MM 0,81X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0068;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "7 MM 0,81X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0070;PLANCHA POLICARBONATO ONDULADA OPAL O/ZINC 0",
+      "descripcion": "7 MM 0,81X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0072;PLANCHA POLICARBONATO ONDULADA TRANSP O/ZINC 0",
+      "descripcion": "7 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0074;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "7 MM 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0076;PLANCHA POLICARBONATO ONDULADA OPAL O/ZINC 0",
+      "descripcion": "7 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0078;PLANCHA POLICARBONATO ONDULADA TRASP O/ZINC 0",
+      "descripcion": "7 MM 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0080;PLANCHA POLICARBONATO ONDULADA BRONCE O/ZINC 0",
+      "descripcion": "7 MM 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0082;PLANCHA POLICARBONATO ONDULADA OPAL O/ZINC 0",
+      "descripcion": "7 MM 0,81X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0084;PLANCHA POLICARBONATO 5V TRASPARENTE 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0086;PLANCHA POLICARBONATO 5V BRONCE 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0088;PLANCHA POLICARBONATO 5V OPAL 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0090;PLANCHA POLICARBONATO 5V TRASPARENTE 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0092;PLANCHA POLICARBONATO 5V BRONCE 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0094;PLANCHA POLICARBONATO 5V OPAL 0",
+      "descripcion": "7 MM X 0,89 X 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0096;PLANCHA POLICARBONATO 5V TRASPARENTE 0",
+      "descripcion": "7 MM X 0,89 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0098;PLANCHA POLICARBONATO 5V OPAL 0",
+      "descripcion": "7 MM X 0,89 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "POLI0100;PLANCHA POLICARBONATO 5V BRONCE 0",
+      "descripcion": "7 MM X 0,89 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PREM0030;PILAR 15 X 15 X 3",
+      "descripcion": "4 MT 9.2 MM 8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "PROMO-EIN023;(NO VENDER) STARTER KIT 4",
+      "descripcion": "0 AH 18V 4",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "RASC0033;(CD) MALLA RACHEL MONOFILAMENTO CAFE",
+      "descripcion": "BEIGE",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "RO1600;RODILLO SIMPLE VIBR RL600B MOTOR HONDA 5",
+      "descripcion": "5",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ROME003;YESO CARTON RH 1200X2400X12",
+      "descripcion": "5MM GYPLAC ROMERAL (26",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "RQT313;PISTOLA PARA TEXTURADO-MARMOLINA COPON ALUM 5LT +3BOQ 3",
+      "descripcion": "4",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "RQT812;JGO CHICHARRA C/CORONA 5PZAS 6X8",
+      "descripcion": "10X12,11X13,14X17",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "RQT826;BISAGRA HIDRAULICA P/PUERTA GABINETE CIERRE 90° 10",
+      "descripcion": "5X4",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SANT001;LADRILLO SANTIAGO 7  29X14X7",
+      "descripcion": "1CM 2",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SANT003;LADRILLO SANTIAGOTE 9  32X15",
+      "descripcion": "4X9,4 CM 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SIDI0005;(CD) SIDING REVEST.M/AMERICANO 0",
+      "descripcion": "20 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SIDI0010;SIDING REVEST.M/ AMERICANO 0",
+      "descripcion": "20 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SIDI0070;* * SIDING REVEST.M/ AMERICANO 0",
+      "descripcion": "20X3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "SIDI0120;SIDING REVEST.M/ AMERICANO 0",
+      "descripcion": "20 X 3",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0200;TEJA CONT CURVA TERRACOTA AYSEN VILLALBA 0",
+      "descripcion": "40X2,15MTX1,15MT (8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0202;TEJA CONT CURVA TERRACOTA AYSEN VILLALBA 0",
+      "descripcion": "40X3,77MTX1,15MT (14",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0204;TEJA CONT CURVA NEGRA AYSEN VILLALBA 0",
+      "descripcion": "40X2,15MTX1,15MT (8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0205;TEJA CONT CURVA NEGRA AYSEN VILLALBA 0",
+      "descripcion": "40X3,00MT X 1,15MT (11",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0206;TEJA CONT CURVA NEGRA AYSEN VILLALBA 0",
+      "descripcion": "40X3,77MTX1,15MT (14",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0218;TEJA CONT CURVA TERRACOTA PUCON MTS IMP 0",
+      "descripcion": "40 X 1,95 MTS X 1,02 (8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0220;TEJA CONT CURVA TERRACOTA PUCON MTS IMP 0",
+      "descripcion": "40 X 3,66 MTS X 1,02 (14",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0222;TEJA CONT CURVA NEGRA PUCON MTS IMP 0",
+      "descripcion": "40 X 1,95 MTS X 1,02 (8",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0224;TEJA CONT CURVA NEGRA PUCON MTS IMP 0",
+      "descripcion": "40 X 3,66 MTS X 1,02 (14",
+      "precio": 0,
+      "stock": "disponible"
+    },
+    {
+      "codigo": "ZINC0226;TEJA CONT CURVA TERRACOTA AYSEN VILLALBA 0",
+      "descripcion": "40X2,96MTX1,15MT (11",
+      "precio": 0,
+      "stock": "disponible"
+    }
+  ]
 }
