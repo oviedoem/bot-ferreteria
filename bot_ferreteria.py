@@ -156,7 +156,7 @@ def procesar(texto, numero):
         else:
             return f"No encontré '{busqueda}' en nuestro catálogo."
     else:
-return (
+        return (
         "Hola, bienvenido a Ferretería Oviedo EM\n\n"
         "Puedo ayudarte con:\n"
         "- 'horario' -> Nuestro horario de atención\n"
@@ -166,8 +166,8 @@ return (
         "- 'ubicacion' -> Dónde encontrarnos\n"
         "- 'buscar [nombre]' -> Buscar productos por nombre\n\n"
         "¿En qué puedo ayudarte hoy?"
-    
-        )
+        
+            )
 
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
