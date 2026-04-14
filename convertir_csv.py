@@ -13,27 +13,8 @@ def limpiar_nombre(nombre):
     """Limpia el nombre del producto: saca TODOS los signos y parentesis"""
     # Sacar parentesis y su contenido
     nombre = re.sub(r'\([^)]*\)', '', nombre)
-    # Sacar signos especiales
-    nombre = nombre.replace('*', '')
-    nombre = nombre.replace('#', '')
-    nombre = nombre.replace('@', '')
-    nombre = nombre.replace('$', '')
-    nombre = nombre.replace('%', '')
-    nombre = nombre.replace('&', '')
-    nombre = nombre.replace('"', '')
-    nombre = nombre.replace('?', '')
-    nombre = nombre.replace('!', '')
-    nombre = nombre.replace('+', '')
-    nombre = nombre.replace('=', '')
-    nombre = nombre.replace('|', '')
-    nombre = nombre.repl\\ace('\', '')
-    nombre = nombre.replace('/', '')
-    nombre = nombre.replace('[', '')
-    nombre = nombre.replace(']', '')
-    nombre = nombre.replace('{', '')
-    nombre = nombre.replace('}', '')
-    nombre = nombre.replace('<', '')
-    nombre = nombre.replace('>', '')
+    # Sacar signos especiales usando regex
+    nombre = re.sub(r'[*#@\$%&\"?!+=|\\/\[\]{}<>]', '', nombre)
     # Sacar espacios multiples
     nombre = re.sub(r'\s+', ' ', nombre)
     # Sacar espacios al inicio y final
