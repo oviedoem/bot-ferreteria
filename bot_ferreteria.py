@@ -3,8 +3,7 @@
 """
 Bot Ferretería - WhatsApp Business Bot
 Conecta con productos.json para consultas de productos y precios
-Version 2.4 - Fixed syntax error in enviar function
-"""
+Version 2.5 - Mensaje de bienvenida mejorado"""
 
 import os
 import json
@@ -157,15 +156,17 @@ def procesar(texto, numero):
         else:
             return f"No encontré '{busqueda}' en nuestro catálogo."
     else:
-        return (
-            "Gracias por escribirnos\n\n"
-            "Puedo ayudarte con:\n"
-            "- 'horario' -> Horario de atención\n"
-            "- 'productos' -> Catálogo de productos\n"
-            "- 'precio [nombre]' -> Buscar precio\n"
-            "- 'codigo [nro]' -> Buscar por código\n"
-            "- 'ubicacion' -> Dónde encontrarnos\n\n"
-            "Para consultas específicas, un vendedor te responderá pronto."
+return (
+        "Hola, bienvenido a Ferretería Oviedo EM\n\n"
+        "Puedo ayudarte con:\n"
+        "- 'horario' -> Nuestro horario de atención\n"
+        "- 'productos' -> Ver catálogo completo\n"
+        "- 'precio [nombre]' -> Consultar precios (ej: precio cemento)\n"
+        "- 'codigo [número]' -> Buscar por código de producto\n"
+        "- 'ubicacion' -> Dónde encontrarnos\n"
+        "- 'buscar [nombre]' -> Buscar productos por nombre\n\n"
+        "¿En qué puedo ayudarte hoy?"
+    
         )
 
 @app.route("/webhook", methods=["GET", "POST"])
