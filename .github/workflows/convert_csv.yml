@@ -1,0 +1,49 @@
+name: Convertir CSV a JSON
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Descargar CSV desde OneDrive
+        run: |
+          # URL del archivo compartido en OneDrive
+          ONE_DRIVE_URL="https://onedrive.live.com/personal/0997a298f38f1554/_layouts/15/Doc.aspx?sourcedoc=%7Bc18428d3-8b28-4f54-b37a-d4b99c892fed%7D"
+          # Intentar descargar como CSV
+          curl -L "https://onedrive.live.com/download?cid=d2977c55-2364-4f15-898e-bbc6e9d45281&resid=C18428D38B284F54B37AD4B99C892FED!115&authkey=!AJ6qjA" -o PRODUCTOS.csv || echo "Descarga fallida, usando archivo existente"
+
+      - name: Instalar dependencias
+        run: pip install pandas
+
+      - name: Ejecutar conversion
+        run: python convertir_csv.py PRODUCTOS.csv productos.json
+
+      - name: Verificar output
+        run: |
+          echo "Tamaño del JSON generado:"
+          wc -c productos.json
+          head -20 productos.json
+
+      - name: Commit cambios
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add productos.json
+          if git diff --staged --quiet; then
+            echo "No hay cambios"
+          else
+            git commit -m "Actualizar catalogo de productos desde CSV" || echo "No hay cambios"
+            git push
+          fi
