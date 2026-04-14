@@ -4,7 +4,6 @@
 Bot Ferretería - WhatsApp Business Bot
 Conecta con productos.json para consultas de productos y precios
 """
-
 import os
 import json
 import time
@@ -43,21 +42,33 @@ def cargar_datos():
         return {"productos": [], "horario": "Consultar por WhatsApp", "ubicacion": "Las Cabras"}
 
 def enviar(numero, texto):
-    """Envia mensaje de texto via WHAPI"""
+    """Envía mensaje de texto vía WHAPI"""
     if not numero or not texto:
         return
+    
+    # Limpiar el número: quitar @s.whatsapp.net y caracteres no numéricos
+    chat_id = numero
+    if "@s.whatsapp.net" in numero:
+        chat_id = numero.replace("@s.whatsapp.net", "")
+    # Asegurar formato correcto (solo números)
+    chat_id = re.sub(r'[^0-9]', '', chat_id)
+    if not chat_id:
+        print(f"Número inválido después de limpieza: {numero}")
+        return
+    
     headers = {"Authorization": f"Bearer {WHAPI_TOKEN}"}
     payload = {
-        "chat_id": numero,
+        "chat_id": f"{chat_id}@s.whatsapp.net",
         "text": texto
     }
     try:
         resp = requests.post(WHAPI_URL, json=payload, headers=headers, timeout=10)
-        print(f"Enviado a {numero}: {resp.status_code}")
+        print(f"Enviado a {chat_id}@s.whatsapp.net: {resp.status_code}")
+        if resp.status_code != 200:
+            print(f"Respuesta API: {resp.text[:200]}")
     except Exception as e:
         print(f"Error enviando: {e}")
-
-def buscar_productos(datos, busqueda):
+        def buscar_productos(datos, busqueda):
     """Busca productos por nombre, descripción o código"""
     productos = datos.get("productos", [])
     busqueda_lower = busqueda.lower()
@@ -74,7 +85,7 @@ def procesar(texto, numero):
     datos = cargar_datos()
     texto = texto.strip()
     texto_lower = texto.lower()
-
+    
     if texto_lower.startswith("precio "):
         busqueda = texto[7:].strip()
         if len(busqueda) < 2:
@@ -92,8 +103,8 @@ def procesar(texto, numero):
                     resp += f"\n- {nombre} -> ${precio:,} CLP (IVA inc.)"
             return resp
         else:
-            return f"No encontre '{busqueda}' en el catalogo.\nEscribe 'productos' para ver la lista completa o contactanos directamente."
-
+            return f"No encontré '{busqueda}' en el catálogo.\nEscribe 'productos' para ver la lista completa o contáctanos directamente."
+    
     elif texto_lower.startswith("codigo "):
         codigo_busqueda = texto[7:].strip().lower()
         if len(codigo_busqueda) < 2:
@@ -108,11 +119,11 @@ def procesar(texto, numero):
                 resp += f"\n- Cod. {codigo} | {nombre} -> ${precio:,} CLP (IVA inc.)"
             return resp
         else:
-            return f"No encontre el código '{codigo_busqueda}' en el catalogo."
-
+            return f"No encontré el código '{codigo_busqueda}' en el catálogo."
+    
     elif texto_lower in ("productos", "catalogo", "catálogo", "lista"):
         productos = datos.get("productos", [])[:50]
-        resp = f"Catalogo ({len(datos.get('productos', []))} productos):\n"
+        resp = f"Catálogo ({len(datos.get('productos', []))} productos):\n"
         for p in productos:
             nombre = p.get("nombre", p.get("descripcion", "Sin nombre"))
             precio = p.get("precio", 0)
@@ -122,17 +133,17 @@ def procesar(texto, numero):
             else:
                 resp += f"\n- {nombre} -> ${precio:,}"
         if len(datos.get("productos", [])) > 50:
-            resp += "\n\nEscribe 'precio [nombre]' para buscar un producto especifico."
+            resp += "\n\nEscribe 'precio [nombre]' para buscar un producto específico."
         return resp
-
+    
     elif texto_lower in ("horario", "atencion", "atención"):
         horario = datos.get("horario", "Lunes a Viernes 09:00 - 18:00")
-        return f"Horario de atencion:\n{horario}\n\n¿En que mas puedo ayudarte?"
-
+        return f"Horario de atención:\n{horario}\n\n¿En qué más puedo ayudarte?"
+    
     elif texto_lower in ("ubicacion", "direccion", "donde", "ubicación"):
         ubicacion = datos.get("ubicacion", "Las Cabras, Chile")
-        return f"Te esperamos en:\n{ubicacion}\n\n¿Necesitas algo mas?"
-
+        return f"Te esperamos en:\n{ubicacion}\n\n¿Necesitas algo más?"
+    
     elif texto_lower.startswith("buscar "):
         busqueda = texto[7:].strip()
         if len(busqueda) < 2:
@@ -150,41 +161,79 @@ def procesar(texto, numero):
                     resp += f"\n- {nombre} -> ${precio:,} CLP"
             return resp
         else:
-            return f"No encontre '{busqueda}' en nuestro catalogo."
-
+            return f"No encontré '{busqueda}' en nuestro catálogo."
+    
     else:
         return (
             "Gracias por escribirnos\n\n"
             "Puedo ayudarte con:\n"
-            "- 'horario' -> Horario de atencion\n"
-            "- 'productos' -> Catalogo de productos\n"
+            "- 'horario' -> Horario de atención\n"
+            "- 'productos' -> Catálogo de productos\n"
             "- 'precio [nombre]' -> Buscar precio\n"
-            "- 'codigo [nro]' -> Buscar por codigo\n"
-            "- 'ubicacion' -> Donde encontrarnos\n\n"
-            "Para consultas especificas, un vendedor te respondera pronto."
+            "- 'codigo [nro]' -> Buscar por código\n"
+            "- 'ubicacion' -> Dónde encontrarnos\n\n"
+            "Para consultas específicas, un vendedor te responderá pronto."
         )
-
-@app.route("/webhook", methods=["POST"])
+        @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
-    data = request.json
+    if request.method == "GET":
+        # Webhook verification - responde OK para que Whapi confirme
+        return "OK", 200
+    
+    data = request.json or {}
+    print(f"Webhook recibido: {list(data.keys())}")
+    
+    # Manejar eventos de estados (delivery, read) - solo loguear
+    if "statuses" in data:
+        print(f"Evento de estado recibido: {data.get('statuses', [])}")
+        return jsonify({"status": "ok"})
+    
+    # Manejar eventos de mensajes entrantes
+    if "messages" not in data:
+        print(f"Webhook sin clave 'messages': {data}")
+        return jsonify({"status": "ok"})
+    
     try:
-        msg = data["messages"][0]
-        if msg.get("from_me"):
+        msgs = data["messages"]
+        if not msgs:
             return jsonify({"status": "ok"})
-        numero = msg["chat_id"]
-        texto = msg.get("text", {}).get("body", "")
-        if texto:
+        
+        for msg in msgs:
+            # Ignorar mensajes enviados por el bot
+            if msg.get("from_me"):
+                continue
+            
+            numero = msg.get("chat_id", "")
+            
+            # Obtener el texto del mensaje
+            texto = ""
+            if msg.get("type") == "text":
+                texto = msg.get("text", {}).get("body", "")
+            elif msg.get("type") == "link_preview":
+                texto = msg.get("link_preview", {}).get("body", "")
+            elif msg.get("type") in ("image", "video", "audio", "voice", "document"):
+                texto = "[archivo multimedia]"
+            
+            if not texto:
+                print(f"Mensaje sin texto: tipo={msg.get('type')}, chat_id={numero}")
+                continue
+            
+            print(f"Mensaje recibido de {numero}: {texto[:50]}...")
             respuesta = procesar(texto, numero)
             enviar(numero, respuesta)
+            print(f"Respuesta enviada a {numero}")
+    
     except Exception as e:
-        print("Error en webhook:", e)
+        print(f"Error en webhook: {e}")
+        import traceback
+        traceback.print_exc()
+    
     return jsonify({"status": "ok"})
-
-@app.route("/", methods=["GET"])
+    @app.route("/", methods=["GET"])
 def home():
     datos = cargar_datos()
     num_prod = len(datos.get("productos", []))
-    return f"Bot Ferreteria activo - {num_prod} productos cargados"
+    return f"Bot Ferretería activo - {num_prod} productos cargados"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
