@@ -169,7 +169,7 @@ def procesar(texto, numero):
 
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
-    if request.method == "GET":
+        if request.method == "GET" and not request.get_json(silent=True):
         # Webhook verification - responde OK para que Whapi confirme
         return "OK", 200
     data = request.json or {}
