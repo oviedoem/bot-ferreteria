@@ -3,6 +3,7 @@
 """
 Bot Ferretería - WhatsApp Business Bot
 Conecta con productos.json para consultas de productos y precios
+Version 2.1 - Fix webhook and message sending
 """
 import os
 import json
