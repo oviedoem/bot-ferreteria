@@ -23,16 +23,16 @@ jobs:
         run: |
           DOWNLOAD_URL="https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED"
           echo "Descargando desde: $DOWNLOAD_URL"
-          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1
+          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv
           echo "---"
           ls -la PRODUCTOS.csv
           echo "---"
           if [ -f PRODUCTOS.csv ]; then
             echo "Archivo descargado exitosamente"
-            cabeza -3 PRODUCTOS.csv
+            head -3 PRODUCTOS.csv
           else
             echo "ERROR: No se pudo descargar el archivo"
-            Salida 1
+            exit 1
           fi
 
       - name: Verificar descarga
@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "Tamaño del JSON generado:"
           wc -c productos.json
-          cabeza -30 productos.json
+          head -30 productos.json
 
       - name: Commit cambios
         env:
