@@ -1,5 +1,4 @@
-name: Convertir CSV a JSON
-
+name: Actualizar catalogo de productos
 on:
   workflow_dispatch:
   schedule:
@@ -21,40 +20,26 @@ jobs:
           python-version: '3.11'
 
       - name: Descargar CSV desde OneDrive
-        run: |
-          python3 << 'PYEOF'
-import base64
-import urllib.request
+        run: python3 download_csv.py
 
-share_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA?e=he8jxe"
-encoded = base64.urlsafe_b64encode(share_url.encode()).rstrip(b'=').decode()
-api_url = f"https://api.onedrive.com/v1.0/shares/u!{encoded}/root/content"
-print(f"Descargando desde: {api_url}")
-headers = {"Accept": "*/*"}
-req = urllib.request.Request(api_url, headers=headers)
-with urllib.request.urlopen(req, timeout=30) as r:
-    data = r.read()
-with open("PRODUCTOS.csv", "wb") as f:
-    f.write(data)
-print(f"Descargado: {len(data)} bytes")
-PYEOF
+      - name: Verificar descarga
+        run: |
           wc -c PRODUCTOS.csv
           if [ ! -s PRODUCTOS.csv ]; then exit 1; fi
 
       - name: Instalar dependencias
         run: pip install requests
 
-      - name: conversion ejecutable
-        run: python convertir_csv.py PRODUCTOS.csv productos.json
+      - name: Convertir CSV a JSON
+        run: python3 convertir_csv.py PRODUCTOS.csv productos.json
 
-      - name: Verificar salida
-        run: |
-          python3 -c "import json; data=json.load(open('productos.json')); print(len(data))"
+      - name: Verificar salida JSON
+        run: python3 -c "import json; data=json.load(open('productos.json')); print(f'{len(data.get(\"productos\", []))} productos cargados')"
 
-      - name: Comprometer cambios
+      - name: Commit cambios
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add PRODUCTOS.csv productos.json
-          git diff-index --quiet HEAD || git commit -m "Actualizar CSV y productos.json" -a
+          git diff-index --quiet HEAD || git commit -m "Actualizar catalogo de productos" -a
           git push
