@@ -1,11 +1,36 @@
 # -*- coding: utf-8 -*-
 """
 Script para convertir PRODUCTOS.csv a productos.json
+Limpia nombres: saca signos, (cd), (e1), **, etc.
 Uso: python convertir_csv.py PRODUCTOS.csv productos.json
 """
 import csv
 import json
 import sys
+import re
+
+def limpiar_nombre(nombre):
+    """Limpia el nombre del producto: saca signos, (cd), (e1), **, etc."""
+    # Sacar **
+    nombre = nombre.replace('**', '')
+    # Sacar (cd) y variantes
+    nombre = re.sub(r'\s*\(cd\)\s*', '', nombre, flags=re.IGNORECASE)
+    # Sacar (e1) y variantes
+    nombre = re.sub(r'\s*\(e1\)\s*', '', nombre, flags=re.IGNORECASE)
+    # Sacar otros parentesis con codigo tipo (abc)
+    nombre = re.sub(r'\s*\([a-zA-Z0-9]+\)\s*', '', nombre)
+    # Sacar signos especiales comunes
+    nombre = nombre.replace('*', '')
+    nombre = nombre.replace('#', '')
+    nombre = nombre.replace('@', '')
+    nombre = nombre.replace('$', '')
+    nombre = nombre.replace('%', '')
+    nombre = nombre.replace('&', '')
+    # Sacar espacios multiples
+    nombre = re.sub(r'\s+', ' ', nombre)
+    # Sacar espacios al inicio y final
+    nombre = nombre.strip()
+    return nombre
 
 def convertir(csv_path, json_path):
     productos = []
@@ -19,13 +44,15 @@ def convertir(csv_path, json_path):
                 # El nombre puede contener comas, tomar todo entre codigo y precio
                 precio = row[-1].strip()
                 nombre = ','.join(row[1:-1]).strip()
+                # Limpiar el nombre
+                nombre_limpio = limpiar_nombre(nombre)
                 try:
                     precio_num = int(precio)
                 except:
                     precio_num = 0
                 productos.append({
                     "codigo": codigo,
-                    "descripcion": nombre,
+                    "descripcion": nombre_limpio,
                     "precio": precio_num,
                     "stock": "disponible"
                 })
