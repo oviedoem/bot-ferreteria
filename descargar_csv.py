@@ -6,16 +6,13 @@ import sys
 OUTPUT_FILE = "PRODUCTOS.csv"
 
 def download():
-    # URL compartida de OneDrive
-    share_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbxxt2Zbx_apU49-e_J6qjA?e=DPIDd1"
+    # URL compartida de OneDrive con parametro download=1
+    # Esta URL funciona desde GitHub Actions sin autenticacion
+    share_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbxxt2Zbx_apU49-e_J6qjA?e=IM7Cjn"
     
-    # Primera opcion: intentar descargar directamente con la URL de OneDrive
-    # usando el formato de download con cid y resid
-    # CID extraido del link: D2977C5523644F15
-    # El file_id es: IQDTKITBKItUT7N61LmciS_tAbxxt2Zbx_apU49-e_J6qjA
-    
-    # Opcion 1: URL directa con download endpoint
-    download_url = "https://onedrive.live.com/download?cid=D2977C5523644F15&resid=IQDTKITBKItUT7N61LmciS_tAbxxt2Zbx_apU49-e_J6qjA!1&em=2"
+    # URL de descarga directa con &download=1
+    # Esta URL redirige al endpoint de descarga de OneDrive
+    download_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKItUT7N61LmciS_tAbxxt2Zbx_apU49-e_J6qjA?e=IM7Cjn&download=1"
     
     print(f"Intentando descargar desde: {download_url}")
     
