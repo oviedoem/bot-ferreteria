@@ -169,13 +169,48 @@ def procesar(texto, numero):
 
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
-        if request.method == "GET" and not request.get_json(silent=True):
-                # Webhook verification - responde OK para que Whapi confirme
-                    return "OK", 200
-        data = request.json or {}
+    if request.method == "GET" and not request.get_json(silent=True):
+        # Webhook verification - responde OK para que Whapi confirme
+        return "OK", 200
+    data = request.json or {}
     print(f"Webhook recibido: {list(data.keys())}")
     # Manejar eventos de estados (delivery, read) - solo loguear
     if "statuses" in data or "estados" in data:
+        print(f"Evento de estado recibido: {data.get('statuses') or data.get('estados', [])}")
+        return jsonify({"status": "ok"})
+    # Manejar eventos de mensajes entrantes
+    if "messages" not in data and "mensajes" not in data:
+        print(f"Webhook sin clave 'messages/mensajes': {data}")
+        return jsonify({"status": "ok"})
+    try:
+        msgs = data.get("messages") or data.get("mensajes")
+        if not msgs:
+            return jsonify({"status": "ok"})
+        for msg in msgs:
+            # Ignorar mensajes enviados por el bot
+            if msg.get("from_me"):
+                continue
+            numero = msg.get("chat_id", "")
+            # Obtener el texto del mensaje
+            texto = ""
+            if msg.get("type") == "text":
+                texto = msg.get("text", {}).get("body", "")
+            elif msg.get("type") == "link_preview":
+                texto = msg.get("link_preview", {}).get("body", "")
+            elif msg.get("type") in ("image", "video", "audio", "voice", "document"):
+                texto = "[archivo multimedia]"
+            if not texto:
+                print(f"Mensaje sin texto: tipo={msg.get('type')}, chat_id={numero}")
+                continue
+            print(f"Mensaje recibido de {numero}: {texto[:50]}...")
+            respuesta = procesar(texto, numero)
+            enviar(numero, respuesta)
+            print(f"Respuesta enviada a {numero}")
+    except Exception as e:
+        print(f"Error en webhook: {e}")
+        import traceback
+        traceback.print_exc()
+    return jsonify({"status": "ok"})
         print(f"Evento de estado recibido: {data.get('statuses') or data.get('estados', [])}")
         return jsonify({"status": "ok"})
     # Manejar eventos de mensajes entrantes
