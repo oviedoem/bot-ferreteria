@@ -3,10 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 3 * * *'
-
 permissions:
   contents: write
-
 jobs:
   convert:
     runs-on: ubuntu-latest
@@ -19,37 +17,31 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Instalar dependencias
+        run: pip install pandas requests
+
       - name: Descargar CSV desde OneDrive
-        run: |
-          DOWNLOAD_URL="https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED"
-          echo "Descargando desde: $DOWNLOAD_URL"
-          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv
-          echo "---"
-          ls -la PRODUCTOS.csv
-          echo "---"
-          if [ -f PRODUCTOS.csv ]; then
-            echo "Archivo descargado exitosamente"
-            head -3 PRODUCTOS.csv
-          else
-            echo "ERROR: No se pudo descargar el archivo"
-            exit 1
-          fi
+        run: python descargar_csv.py
 
       - name: Verificar descarga
         run: |
+          echo "Tamanio del CSV descargado:"
           wc -c PRODUCTOS.csv
-          if [ ! -s PRODUCTOS.csv ]; then exit 1; fi
-
-      - name: Instalar dependencias
-        run: pip install pandas
+          if [ ! -s PRODUCTOS.csv ]; then
+            echo "ERROR: Archivo vacio o no descargado"
+            exit 1
+          fi
+          echo "--- Primeras lineas ---"
+          head -5 PRODUCTOS.csv
 
       - name: Convertir CSV a JSON
         run: python convertir_csv.py PRODUCTOS.csv productos.json
 
       - name: Verificar salida JSON
         run: |
-          echo "Tamaño del JSON generado:"
+          echo "Tamanio del JSON generado:"
           wc -c productos.json
+          echo "--- Contenido inicial ---"
           head -30 productos.json
 
       - name: Commit cambios
