@@ -67,7 +67,7 @@ def enviar(numero, texto):
     except Exception as e:
         print(f"Error enviando: {e}")
 
-def buscar_productos(datos, busqueda):
+def buscar_productos(datos, busqueda, orden="nombre"):
     """Busca productos por nombre, descripción o código"""
     productos = datos.get("productos", [])
     busqueda_lower = busqueda.lower()
@@ -77,6 +77,12 @@ def buscar_productos(datos, busqueda):
         codigo = p.get("codigo", "").lower()
         if busqueda_lower in nombre or busqueda_lower in codigo:
             encontrados.append(p)
+
+    if orden == "precio":
+        encontrados.sort(key=lambda x: x.get("precio", 0))
+    else:
+        encontrados.sort(key=lambda x: x.get("nombre", x.get("descripcion", "")).lower())
+
     return encontrados
 
 def procesar(texto, numero):
