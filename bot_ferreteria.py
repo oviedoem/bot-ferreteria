@@ -56,7 +56,7 @@ def enviar(numero, texto):
         return
     headers = {"Authorization": f"Bearer {WHAPI_TOKEN}"}
     payload = {
-        "chat_id": f"{chat_id}@s.whatsapp.net",
+        "to": f"{chat_id}@s.whatsapp.net",
         "text": texto
     }
     try:
