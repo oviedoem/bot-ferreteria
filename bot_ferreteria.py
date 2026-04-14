@@ -3,8 +3,9 @@
 """
 Bot Ferretería - WhatsApp Business Bot
 Conecta con productos.json para consultas de productos y precios
-Version 2.2 - Fixed indentation and gunicorn support
+Version 2.3 - Fixed duplicate code in webhook
 """
+
 import os
 import json
 import time
@@ -34,9 +35,9 @@ def cargar_datos():
     try:
         with open("productos.json", "r", encoding="utf-8") as f:
             datos_cache = json.load(f)
-            ultima_carga = ahora
-            print(f"Datos cargados: {len(datos_cache.get('productos', []))} productos")
-            return datos_cache
+        ultima_carga = ahora
+        print(f"Datos cargados: {len(datos_cache.get('productos', []))} productos")
+        return datos_cache
     except Exception as e:
         print(f"Error cargando datos: {e}")
         return {"productos": [], "horario": "Consultar por WhatsApp", "ubicacion": "Las Cabras"}
@@ -84,6 +85,7 @@ def procesar(texto, numero):
     datos = cargar_datos()
     texto = texto.strip()
     texto_lower = texto.lower()
+    
     if texto_lower.startswith("precio "):
         busqueda = texto[7:].strip()
         if len(busqueda) < 2:
@@ -102,6 +104,7 @@ def procesar(texto, numero):
             return resp
         else:
             return f"No encontré '{busqueda}' en el catálogo.\nEscribe 'productos' para ver la lista completa o contáctanos directamente."
+    
     elif texto_lower.startswith("codigo "):
         codigo_busqueda = texto[7:].strip().lower()
         if len(codigo_busqueda) < 2:
@@ -117,6 +120,7 @@ def procesar(texto, numero):
             return resp
         else:
             return f"No encontré el código '{codigo_busqueda}' en el catálogo."
+    
     elif texto_lower in ("productos", "catalogo", "catálogo", "lista"):
         productos = datos.get("productos", [])[:50]
         resp = f"Catálogo ({len(datos.get('productos', []))} productos):\n"
@@ -131,12 +135,15 @@ def procesar(texto, numero):
         if len(datos.get("productos", [])) > 50:
             resp += "\n\nEscribe 'precio [nombre]' para buscar un producto específico."
         return resp
+    
     elif texto_lower in ("horario", "atencion", "atención"):
         horario = datos.get("horario", "Lunes a Viernes 09:00 - 18:00")
         return f"Horario de atención:\n{horario}\n\n¿En qué más puedo ayudarte?"
+    
     elif texto_lower in ("ubicacion", "direccion", "donde", "ubicación"):
         ubicacion = datos.get("ubicacion", "Las Cabras, Chile")
         return f"Te esperamos en:\n{ubicacion}\n\n¿Necesitas algo más?"
+    
     elif texto_lower.startswith("buscar "):
         busqueda = texto[7:].strip()
         if len(busqueda) < 2:
@@ -155,6 +162,7 @@ def procesar(texto, numero):
             return resp
         else:
             return f"No encontré '{busqueda}' en nuestro catálogo."
+    
     else:
         return (
             "Gracias por escribirnos\n\n"
@@ -169,28 +177,35 @@ def procesar(texto, numero):
 
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
+    # Webhook verification - responde OK para que Whapi confirme
     if request.method == "GET" and not request.get_json(silent=True):
-        # Webhook verification - responde OK para que Whapi confirme
         return "OK", 200
+    
     data = request.json or {}
     print(f"Webhook recibido: {list(data.keys())}")
+    
     # Manejar eventos de estados (delivery, read) - solo loguear
     if "statuses" in data or "estados" in data:
         print(f"Evento de estado recibido: {data.get('statuses') or data.get('estados', [])}")
         return jsonify({"status": "ok"})
+    
     # Manejar eventos de mensajes entrantes
     if "messages" not in data and "mensajes" not in data:
         print(f"Webhook sin clave 'messages/mensajes': {data}")
         return jsonify({"status": "ok"})
+    
     try:
         msgs = data.get("messages") or data.get("mensajes")
         if not msgs:
             return jsonify({"status": "ok"})
+        
         for msg in msgs:
             # Ignorar mensajes enviados por el bot
             if msg.get("from_me"):
                 continue
+            
             numero = msg.get("chat_id", "")
+            
             # Obtener el texto del mensaje
             texto = ""
             if msg.get("type") == "text":
@@ -199,52 +214,21 @@ def webhook():
                 texto = msg.get("link_preview", {}).get("body", "")
             elif msg.get("type") in ("image", "video", "audio", "voice", "document"):
                 texto = "[archivo multimedia]"
+            
             if not texto:
                 print(f"Mensaje sin texto: tipo={msg.get('type')}, chat_id={numero}")
                 continue
+            
             print(f"Mensaje recibido de {numero}: {texto[:50]}...")
             respuesta = procesar(texto, numero)
             enviar(numero, respuesta)
             print(f"Respuesta enviada a {numero}")
+    
     except Exception as e:
         print(f"Error en webhook: {e}")
         import traceback
         traceback.print_exc()
-    return jsonify({"status": "ok"})
-        print(f"Evento de estado recibido: {data.get('statuses') or data.get('estados', [])}")
-        return jsonify({"status": "ok"})
-    # Manejar eventos de mensajes entrantes
-    if "messages" not in data and "mensajes" not in data:
-        print(f"Webhook sin clave 'messages/mensajes': {data}")
-        return jsonify({"status": "ok"})
-    try:
-        msgs = data.get("messages") or data.get("mensajes")
-        if not msgs:
-            return jsonify({"status": "ok"})
-        for msg in msgs:
-            # Ignorar mensajes enviados por el bot
-            if msg.get("from_me"):
-                continue
-            numero = msg.get("chat_id", "")
-            # Obtener el texto del mensaje
-            texto = ""
-            if msg.get("type") == "text":
-                texto = msg.get("text", {}).get("body", "")
-            elif msg.get("type") == "link_preview":
-                texto = msg.get("link_preview", {}).get("body", "")
-            elif msg.get("type") in ("image", "video", "audio", "voice", "document"):
-                texto = "[archivo multimedia]"
-            if not texto:
-                print(f"Mensaje sin texto: tipo={msg.get('type')}, chat_id={numero}")
-                continue
-            print(f"Mensaje recibido de {numero}: {texto[:50]}...")
-            respuesta = procesar(texto, numero)
-            enviar(numero, respuesta)
-            print(f"Respuesta enviada a {numero}")
-    except Exception as e:
-        print(f"Error en webhook: {e}")
-        import traceback
-        traceback.print_exc()
+    
     return jsonify({"status": "ok"})
 
 @app.route("/", methods=["GET"])
