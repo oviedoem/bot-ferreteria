@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+
 jobs:
   convert:
     runs-on: ubuntu-latest
@@ -20,22 +21,50 @@ jobs:
 
       - name: Descargar CSV desde OneDrive
         run: |
-          DOWNLOAD_URL="https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED%21115&authkey=%21AJ6qjA&cid=c18428d38b284f54"
-          echo "Descargando desde: $DOWNLOAD_URL"
-          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1
-          echo "---"
-          ls -la PRODUCTOS.csv
-          echo "---"
-          if [ -f PRODUCTOS.csv ]; then
-            echo "Archivo descargado exitosamente"
-            head -3 PRODUCTOS.csv
-          else
-            echo "ERROR: No se pudo descargar el archivo"
-            exit 1
-          fi
+          # Descargar CSV desde OneDrive usando Python con headers
+          python3 << 'EOF'
+          import urllib.request
+          import os
+          
+          # URL de OneDrive share
+          share_url = "https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKIuTU7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA"
+          
+          # URL de download directa
+          download_url = "https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED%21115&authkey=%21AJ6qjA&cid=c18428d38b284f54"
+          
+          print("Intentando descargar con diferentes metodos...")
+          
+          # Metodo 1: curl con user-agent de navegador
+          import subprocess
+          result = subprocess.run([
+              "curl", "-L", "-A", "Mozilla/5.0",
+              "-H", "Accept: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              download_url,
+              "-o", "PRODUCTOS.csv",
+              "-w", "%{http_code}"
+          ], capture_output=True, text=True)
+          
+          print(f"HTTP status: {result.stdout}")
+          print(f"stderr: {result.stderr}")
+          
+          if os.path.getsize("PRODUCTOS.csv") > 1000:
+              print("Descarga exitosa con curl")
+          else:
+              print("ERROR: Archivo descargado muy pequeno")
+              exit(1)
+          
+          print("---")
+          print(f"Tamano: {os.path.getsize('PRODUCTOS.csv')} bytes")
+          print("Primeras 3 lineas:")
+          with open("PRODUCTOS.csv", "r") as f:
+              for i, line in enumerate(f):
+                  if i >= 3:
+                      break
+                  print(line.strip())
+          EOF
 
       - name: Instalar dependencias
-        run: pip install pandas
+        run: pip install pandas openpyxl
 
       - name: Ejecutar conversion
         run: python convertir_csv.py PRODUCTOS.csv productos.json
