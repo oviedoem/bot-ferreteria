@@ -1,0 +1,69 @@
+name: Despliegue del Bot WhatsApp
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'bot_ferreteria.py'
+      - 'productos.json'
+      - 'requirements.txt'
+      - 'Procfile'
+      - '.github/workflows/deploy.yml'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verificar archivos necesarios
+        run: |
+          echo "=== Archivos del repositorio ==="
+          ls -la
+          echo "=== Contenido de requirements.txt ==="
+          cat requirements.txt
+          echo "=== Contenido de Procfile ==="
+          cat Procfile
+          echo "=== Validar productos.json ==="
+          python3 -c "import json; json.load(open('productos.json'))"
+          echo "productos.json es valido"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mostrar URL del webhook
+        run: |
+          echo "============================================"
+          echo "BOT FERRERIA - CONFIGURACION DEL WEBHOOK"
+          echo "============================================"
+          echo ""
+          echo "1. Despliega tu aplicacion en un servicio como:"
+          echo "   - Railway: https://railway.app"
+          echo "   - Render: https://render.com"
+          echo "   - Heroku: https://heroku.com"
+          echo ""
+          echo "2. Conecta tu repositorio de GitHub al servicio"
+          echo ""
+          echo "3. Configura la variable de entorno:"
+          echo "   - WHAPI_TOKEN: tu_token_de_whapi"
+          echo ""
+          echo "4. La URL de tu webhook sera:"
+          echo "   https://tu-dominio.com/webhook"
+          echo ""
+          echo "5. En WHAPI Cloud, configura el webhook:"
+          echo "   URL: https://tu-dominio.com/webhook"
+          echo "   Metodo: POST"
+          echo ""
+          echo "============================================"
+          echo "Bot listo para recibir mensajes de WhatsApp!"
+          echo "============================================"
