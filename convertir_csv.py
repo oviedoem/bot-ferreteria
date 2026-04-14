@@ -26,7 +26,7 @@ def limpiar_nombre(nombre):
     nombre = nombre.replace('+', '')
     nombre = nombre.replace('=', '')
     nombre = nombre.replace('|', '')
-    nombre = nombre.replace('\', '')
+    nombre = nombre.repl\\ace('\', '')
     nombre = nombre.replace('/', '')
     nombre = nombre.replace('[', '')
     nombre = nombre.replace(']', '')
