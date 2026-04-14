@@ -1,5 +1,4 @@
 name: Convertir CSV a JSON
-
 on:
   workflow_dispatch:
   schedule:
@@ -19,14 +18,19 @@ jobs:
 
       - name: Descargar CSV desde OneDrive
         run: |
-          # Usar URL de embed convertida a download
-          # Share URL: https://1drv.ms/x/c/0997a298f38f1554/IQDTKITBKIuTU7N61LmciS_tAbyxt2Zby_apU49-e_J6qjA?e=he8jxe
-          EMBED_URL="https://onedrive.live.com/embed?resid=C18428D38B284F54B37AD4B99C892FED%21115&authkey=%21AJ6qjA"
-          DOWNLOAD_URL=$(echo "$EMBED_URL" | sed 's/embed/download/')
-          echo "Intentando descargar desde: $DOWNLOAD_URL"
-          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1 || echo "Error en descarga"
+          DOWNLOAD_URL="https://onedrive.live.com/download?resid=C18428D38B284F54B37AD4B99C892FED%21115&authkey=%21AJ6qjA&cid=c18428d38b284f54"
+          echo "Descargando desde: $DOWNLOAD_URL"
+          curl -L "$DOWNLOAD_URL" -o PRODUCTOS.csv 2>&1
+          echo "---"
           ls -la PRODUCTOS.csv
-          head -5 PRODUCTOS.csv
+          echo "---"
+          if [ -f PRODUCTOS.csv ]; then
+            echo "Archivo descargado exitosamente"
+            head -3 PRODUCTOS.csv
+          else
+            echo "ERROR: No se pudo descargar el archivo"
+            exit 1
+          fi
 
       - name: Instalar dependencias
         run: pip install pandas
@@ -36,7 +40,7 @@ jobs:
 
       - name: Verificar output
         run: |
-          echo "Tamaño del JSON generado:"
+          echo "Tamanho del JSON generado:"
           wc -c productos.json
           head -30 productos.json
 
